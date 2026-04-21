@@ -1,0 +1,18 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cho phép bất kỳ ai cũng có thể xem danh sách sản phẩm (Cửa hàng)
+    match /products/{productId} {
+      allow read: if true;
+      // Trong môi trường phát triển, cho phép AdminDashboard ghi dữ liệu
+      // QUAN TRỌNG: Hãy thiết lập Firebase Authentication và giới hạn quyền cho Admin trong tương lai
+      allow write: if true;
+    }
+
+    // Mặc định từ chối tất cả các truy cập khác để đảm bảo an toàn
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
