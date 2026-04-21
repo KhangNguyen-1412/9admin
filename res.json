@@ -1,0 +1,41 @@
+[
+    {
+        "id": "UUH2G3DTNCgvNX0b4ZVN",
+        "imageUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80",
+        "isActive": true,
+        "stock": 10,
+        "createdAt": {
+            "type": "firestore/timestamp/1.0",
+            "seconds": 1776734274,
+            "nanoseconds": 130000000
+        },
+        "price": 1000,
+        "name": "Test Product"
+    },
+    {
+        "id": "a7Qy87yuG1VTUiExJZPu",
+        "name": "Máy tính bảng Apple",
+        "createdAt": {
+            "type": "firestore/timestamp/1.0",
+            "seconds": 1776738566,
+            "nanoseconds": 112000000
+        },
+        "price": 15000000,
+        "stock": 100,
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSgxTgktWnBYPA8LTg-ukeJv5rQTdwci4qbvPxvxIswrRoOqgCD-qySleOOg987reVgqTEA2XRcVcL6nKi2i7eGsZkOTkMPzZGQBGLl1RJ0svX6AhZQ5E0qJ-RppGmhVJca-50p7-s&usqp=CAc",
+        "isActive": true
+    },
+    {
+        "id": "hI83xzVCtrIJHnDg7zj3",
+        "isActive": true,
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTq0HyPfUSVSI-iizbagzk3TUnXtLE2oBZWQzT6jLSiyQl0DkFsPUr3UmIMCB9ZUiLQ6aXn4IT_HS_NAz0fJ0PMMxTyNkXPK2GC6gT7Fldg1nDv-ZjnQZ3lRuhPYT7L3TO_DZbFyQE8&usqp=CAc",
+        "stock": 0,
+        "price": 66000000,
+        "createdAt": {
+            "type": "firestore/timestamp/1.0",
+            "seconds": 1776738614,
+            "nanoseconds": 602000000
+        },
+        "name": "Iphone 17 promax"
+    }
+]

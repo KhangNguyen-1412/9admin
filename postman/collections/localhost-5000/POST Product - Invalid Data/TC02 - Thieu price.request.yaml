@@ -1,0 +1,27 @@
+$kind: http-request
+name: 'TC02 - Thiếu price'
+method: POST
+url: 'http://localhost:5000/api/products'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {"name": "San pham test", "stock": 10}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("TC02 - Thiếu price: Phải trả về 400", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("TC02 - Response có error message", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("error");
+      });
+      pm.test("TC02 - Response time < 3000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(3000);
+      });
+      console.log("TC02 Status:", pm.response.code, "| Time:", pm.response.responseTime + "ms");

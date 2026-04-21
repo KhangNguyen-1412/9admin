@@ -1,0 +1,27 @@
+$kind: http-request
+name: 'TC05 - name là chuỗi rỗng'
+method: POST
+url: 'http://localhost:5000/api/products'
+order: 5000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {"name": "", "price": 100000, "stock": 10}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("TC05 - name rỗng: Phải trả về 400", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("TC05 - Response có error message", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("error");
+      });
+      pm.test("TC05 - Response time < 3000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(3000);
+      });
+      console.log("TC05 Status:", pm.response.code, "| Time:", pm.response.responseTime + "ms");

@@ -1,0 +1,29 @@
+$kind: http-request
+name: 'TC09 - stock âm'
+method: POST
+url: 'http://localhost:5000/api/products'
+order: 9000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {"name": "San pham test", "price": 100000, "stock": -1}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // Server hiện tại KHÔNG chặn stock âm → trả về 201
+      // Đây là lỗ hổng validation cần ghi nhận
+      pm.test("TC09 - stock âm: Server trả về 201 (lỗ hổng - không chặn stock âm)", function () {
+          pm.response.to.have.status(201);
+      });
+      pm.test("TC09 - [BUG] Server nên trả về 400 khi stock < 0", function () {
+          // Test này sẽ FAIL để đánh dấu bug cần fix
+          pm.expect(pm.response.code, "BUG: stock âm không bị chặn").to.equal(400);
+      });
+      pm.test("TC09 - Response time < 3000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(3000);
+      });
+      console.log("TC09 Status:", pm.response.code, "| BUG: stock âm không bị chặn | Time:", pm.response.responseTime + "ms");

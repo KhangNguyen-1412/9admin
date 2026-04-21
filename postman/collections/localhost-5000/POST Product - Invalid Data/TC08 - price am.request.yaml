@@ -1,0 +1,29 @@
+$kind: http-request
+name: 'TC08 - price âm'
+method: POST
+url: 'http://localhost:5000/api/products'
+order: 8000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {"name": "San pham test", "price": -500, "stock": 10}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // Server hiện tại KHÔNG chặn price âm → trả về 201
+      // Đây là lỗ hổng validation cần ghi nhận
+      pm.test("TC08 - price âm: Server trả về 201 (lỗ hổng - không chặn giá âm)", function () {
+          pm.response.to.have.status(201);
+      });
+      pm.test("TC08 - [BUG] Server nên trả về 400 khi price < 0", function () {
+          // Test này sẽ FAIL để đánh dấu bug cần fix
+          pm.expect(pm.response.code, "BUG: price âm không bị chặn").to.equal(400);
+      });
+      pm.test("TC08 - Response time < 3000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(3000);
+      });
+      console.log("TC08 Status:", pm.response.code, "| BUG: price âm không bị chặn | Time:", pm.response.responseTime + "ms");

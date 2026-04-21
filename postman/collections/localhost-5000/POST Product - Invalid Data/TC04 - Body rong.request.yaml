@@ -1,0 +1,27 @@
+$kind: http-request
+name: 'TC04 - Body rỗng'
+method: POST
+url: 'http://localhost:5000/api/products'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("TC04 - Body rỗng: Phải trả về 400", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("TC04 - Response có error message", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("error");
+      });
+      pm.test("TC04 - Response time < 3000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(3000);
+      });
+      console.log("TC04 Status:", pm.response.code, "| Time:", pm.response.responseTime + "ms");

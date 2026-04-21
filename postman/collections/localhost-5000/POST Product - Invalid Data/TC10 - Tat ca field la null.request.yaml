@@ -1,0 +1,27 @@
+$kind: http-request
+name: 'TC10 - Tất cả field là null'
+method: POST
+url: 'http://localhost:5000/api/products'
+order: 10000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {"name": null, "price": null, "stock": null}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("TC10 - Tất cả null: Phải trả về 400", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("TC10 - Response có error message", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.have.property("error");
+      });
+      pm.test("TC10 - Response time < 3000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(3000);
+      });
+      console.log("TC10 Status:", pm.response.code, "| Time:", pm.response.responseTime + "ms");
